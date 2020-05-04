@@ -2,7 +2,7 @@
 
 ## suploader
 
-![https://img.shields.io/badge/license-Apache%202.0-4EB1BA.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-4EB1BA.svg?longCache=true&style=flat-square)![https://img.shields.io/badge/WebUploader-0.1.8-brightgreen.svg?longCache=true&style=flat-square](https://img.shields.io/badge/WebUploader-0.1.8-brightgreen.svg?longCache=true&style=flat-square)![https://img.shields.io/badge/PhotoSwipe-4.1.3-red.svg?longCache=true&style=flat-square](https://img.shields.io/badge/PhotoSwipe-4.1.3-red.svg?longCache=true&style=flat-square)
+![https://img.shields.io/badge/license-Apache%202.0-4EB1BA.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-4EB1BA.svg?longCache=true&style=flat-square) ![https://img.shields.io/badge/WebUploader-0.1.8-brightgreen.svg?longCache=true&style=flat-square](https://img.shields.io/badge/WebUploader-0.1.8-brightgreen.svg?longCache=true&style=flat-square) ![https://img.shields.io/badge/PhotoSwipe-4.1.3-red.svg?longCache=true&style=flat-square](https://img.shields.io/badge/PhotoSwipe-4.1.3-red.svg?longCache=true&style=flat-square)
 
 
 
