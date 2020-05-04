@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+		<meta name="renderer" content="webkit" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>supload</title>
+		<!-- 全局公用样式 -->
+		<link rel="stylesheet" type="text/css" href="css/supload.css" />
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="js/PhotoSwipe/photoswipe.css" />
+		<link rel="stylesheet" type="text/css" href="js/PhotoSwipe/default-skin/default-skin.css" />
+
+	</head>
+	<style>
+
+		ul {
+			padding: 0;
+			margin: 0;
+		}
+		p{
+			font-size: 16px;
+			margin-bottom: 6px;
+		}
+		
+		h2{
+			margin-bottom: 15px;
+		}
+		a{
+			color: #01AAED;
+		}
+	</style>
+	<body style="padding: 20px;margin-bottom: 100px;">
+		<h1>supload 图片上传</h1>
+		<hr>
+		<blockquote class="layui-elem-quote">本框架只是对webuploader框架进行二次封装，主要是针对图片上传进行的优化。包含了单图片和多图片上传，上传回显，编辑加载，图片删除，位置切换以及基于PhotoSwipe框架的图片预览功能。</blockquote>
+		<h2>1.使用方式</h2>
+		<p>
+			<span>下载地址： <a href="">Gitee</a></span>
+		</p>
+		<p>
+			<span>博客地址： <a href="">Gitee</a></span>
+		</p>
+		<pre class="layui-code" lay-title="html">
+		<!-- 引入supload.css -->
+		<link rel="stylesheet" type="text/css" href="css/supload.css" />
+		 
+		<!-- jquery必须引入在前 -->
+		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 引入webuploader -->
+		<script src="js/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 最后在引入supload -->
+		<script src="js/supload.js" type="text/javascript" charset="utf-8"></script>
+		   
+		    
+		<!-- 加载预览组件PhotoSwipe -->
+		<link rel="stylesheet" type="text/css" href="js/PhotoSwipe/photoswipe.css"  />
+		<link rel="stylesheet" type="text/css" href="js/PhotoSwipe/default-skin/default-skin.css"  />
+		<script src="js/PhotoSwipe/photoswipe-ui-default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/PhotoSwipe/photoswipe.js" type="text/javascript" charset="utf-8"></script>
+	
+		</pre>
+		<h2>2.基本参数</h2>
+		<p> 以下参数是本组件封装的，其余参数与webuploader保持一致</p>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>属性名</th>
+					<th>类型</th>
+					<th>说明</th>
+					<th>示例</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>initFileUrl</td>
+					<td>String/Array</td>
+					<td>初始化图片地址，用于编辑操作加载图片</td>
+					<td>initFileUrl:"http://127.0.0.1:8080/2abd4dc05a1e44d99a5b312761e83cf2.jpeg"</td>
+				</tr>
+				<tr>
+					<td>delServer</td>
+					<td>String</td>
+					<td>删除图片的服务器地址</td>
+					<td>delServer:"http://127.0.0.1:8080/remove"</td>
+				</tr>
+				<tr>
+					<td>delType</td>
+					<td>String</td>
+					<td>删除图片的服务器地址请求类型(默认：GET)</td>
+					<td>delType:"GET"</td>
+				</tr>
+				<tr>
+					<td>imageName</td>
+					<td>String</td>
+					<td>删除图片属性域的name(默认：imageName)</td>
+					<td>imageName:"imageName"</td>
+				</tr>
+				<tr>
+					<td>resCodeName</td>
+					<td>String</td>
+					<td>返回状态码变量名(默认：code)</td>
+					<td>resCodeName:"code"</td>
+				</tr>
+				<tr>
+					<td>resSuccessCode</td>
+					<td>Number</td>
+					<td>返回成功状态码(默认：200)</td>
+					<td>resSuccessCode:200</td>
+				</tr>
+				<tr>
+					<td>label</td>
+					<td>Spring</td>
+					<td>上传域内提示信息(可以使用br标签换行)</td>
+					<td>
+						pick: {
+						label: "文件大小 ≤ 2Mb"
+						}
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>3.常用方法</h2>
+		<pre class="layui-code" lay-title="JavaScript">
+			/**
+			 * 获取队列中的文件（必须使用complete获取，否则使用删除功能后会出现数据不正确）
+			 *
+			 * webUploader为初始化返回的对象
+			 */
+			webUploader.getFile('complete');
+		</pre>
+		<h2>4.基础示例</h2>
+		<fieldset class="layui-elem-field">
+			<legend>单图片上传</legend>
+			<div class="layui-field-box">
+				<div>
+					<ul class="upload-ul"></ul>
+					<div class="upload-pick" id="oneImage"></div>
+				</div>
+				<button class="layui-btn upload-btn" id="oneImageUploadBtn">上传</button>
+				<button class="layui-btn upload-btn" id="oneImageGetFilesBtn">获取图片名</button>
+
+				<pre class="layui-code" lay-title="html">
+				<!-- HTML代码 -->
+				<ul class="upload-ul"></ul>
+				<div class="upload-pick" id="imageUpload"></div>
+					  
+					 
+				<!-- JS代码 -->
+				var $upload = $('#imageUpload').supload({
+				    server: '/uploadFilePath',
+				    pick: {
+					    label: "像素不限<br/>文件大小 ≤ 2Mb"
+				    },
+				    success: function(data) {
+					    console.log(data)
+				    },
+				    error: function(err) {
+					    console.log(err)
+				    },
+				    // 队列数
+				    fileNumLimit: 1,
+				    auto: false
+				});
+						
+				</pre>
+			</div>
+		</fieldset>
+		
+		<fieldset class="layui-elem-field" style="margin-top: 40px;">
+			<legend>多图片上传</legend>
+			<div class="layui-field-box">
+				<div>
+					<ul class="upload-ul"></ul>
+					<div class="upload-pick" id="moreImage"></div>
+				</div>
+				<button class="layui-btn upload-btn" id="moreImageUploadBtn">上传</button>
+				<button class="layui-btn upload-btn" id="moreImageGetFilesBtn">获取图片名</button>
+		
+				<pre class="layui-code" lay-title="html">
+				<!-- HTML代码 -->
+				<ul class="upload-ul"></ul>
+				<div class="upload-pick" id="moreImage"></div>
+					  
+					 
+				<!-- JS代码 -->
+				var $upload = $('#moreImage').supload({
+				    server: '/uploadFilePath',
+				    pick: {
+						multiple: true,
+					    label: "像素不限<br/>文件大小 ≤ 2Mb"
+				    },
+				    success: function(data) {
+					    console.log(data)
+				    },
+				    error: function(err) {
+					    console.log(err)
+				    },
+				    // 队列数
+				    fileNumLimit: 5,
+				    auto: false
+				});
+						
+				</pre>
+			</div>
+		</fieldset>
+		
+		
+		<fieldset class="layui-elem-field" style="margin-top: 40px;">
+			<legend>编辑预览图片</legend>
+			<div class="layui-field-box">
+				<div>
+					<ul class="upload-ul"></ul>
+					<div class="upload-pick" id="previewImage"></div>
+				</div>
+				<button class="layui-btn upload-btn" id="previewImageUploadBtn">上传</button>
+		
+				<pre class="layui-code" lay-title="html">
+				<!-- HTML代码 -->
+				<ul class="upload-ul"></ul>
+				<div class="upload-pick" id="previewImage"></div>
+					  
+					 
+				<!-- JS代码 -->
+				var $upload = $('#previewImage').supload({
+				    server: '/uploadFilePath',
+				    pick: {
+				        multiple: true,
+					    label: "像素不限<br/>文件大小 ≤ 2Mb"
+				    },
+				    success: function(data) {
+					    console.log(data)
+				    },
+				    error: function(err) {
+					    console.log(err)
+				    },
+				    // 队列数
+				    fileNumLimit: 5,
+				    initFileUrl:["img/17e420c250804efe904a09a33796d5a16.jpg","img/87d8194bc9834e9f8f0228e9e530beb1.jpeg","img/sdfdsf.png"],
+				    auto: false
+				});
+						
+				</pre>
+			</div>
+		</fieldset>
+
+
+
+
+
+		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/webuploader.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/PhotoSwipe/photoswipe-ui-default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/PhotoSwipe/photoswipe.js" type="text/javascript" charset="utf-8"></script>
+		<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 该文件用于演示 正式版在dist文件内 -->
+		<script src="js/supload.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			layui.use(['code','layer'], function() { //加载code模块
+				layui.code({
+					encode: true
+				});
+				var layer = layui.layer;
+				
+				function layerInfo(msg) {
+					layer.open({
+					  title: '图片名',
+					  content: msg
+					});     
+				}
+
+				//单上传图片
+				var $oneImage = $('#oneImage').supload({
+					server: '/uploadFilePath',
+					pick: {
+						label: "像素不限<br/>文件大小 ≤ 2Mb"
+					},
+					success: function(data) {
+						console.log(data)
+					},
+					error: function(err) {
+						console.log(err)
+					},
+					// 队列数
+					fileNumLimit: 1,
+					auto: false
+				});
+
+				$("#oneImageUploadBtn").on("click", function() {
+					$oneImage.upload();
+
+				});
+				$("#oneImageGetFilesBtn").on("click",function(){
+					let file = $oneImage.getFiles();
+					layerInfo(file[0].name)
+				});
+				
+				//多上传图片
+				var $moreImage = $('#moreImage').supload({
+					server: '/uploadFilePath',
+					pick: {
+						multiple: true,
+						label: "像素不限<br/>文件大小 ≤ 2Mb"
+					},
+					success: function(data) {
+						console.log(data)
+					},
+					error: function(err) {
+						console.log(err)
+					},
+					// 队列数
+					fileNumLimit: 5,
+					auto: false
+				});
+				
+				$("#moreImageUploadBtn").on("click", function() {
+					$moreImage.upload();
+					
+				});
+				
+				$("#moreImageGetFilesBtn").on("click",function(){
+					let files = $moreImage.getFiles();
+					 var arr = [];
+					for(var item of files) { // item代表数组里面的元素
+					   arr.push(item.name)
+					};　
+					layerInfo(arr.join(","))
+				});
+				
+				//编辑预览
+				var $previewImage = $('#previewImage').supload({
+					server: '/uploadFilePath',
+					pick: {
+						multiple: true,
+						label: "像素不限<br/>文件大小 ≤ 2Mb"
+					},
+					success: function(data) {
+						console.log(data)
+					},
+					error: function(err) {
+						console.log(err)
+					},
+					// 队列数
+					fileNumLimit: 5,
+					initFileUrl:["img/17e420c250804efe904a09a33796d5a16.jpg","img/87d8194bc9834e9f8f0228e9e530beb1.jpeg","img/sdfdsf.png"],
+					auto: false
+				});
+				
+				$("#previewImageUploadBtn").on("click", function() {
+					$previewImage.upload();
+					
+				});
+				
+			
+				
+			});
+		</script>
+	</body>
+</html>
